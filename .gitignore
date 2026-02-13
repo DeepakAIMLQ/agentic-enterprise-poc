@@ -1,0 +1,55 @@
+# Virtual environments (backend/frontend)
+backend/.venv/
+backend/venv/
+backend/env/
+frontend/.venv/
+frontend/venv/
+frontend/env/
+
+# Bytecode & caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Environments & secrets
+.env
+*.env.*
+!.env.example
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# OS generated
+Thumbs.db
+ehthumbs.db
+
+# Logs & temp
+*.log
+logs/
+tmp/
+temp/
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+
+# Docker
+.dockerignore  # if exists
+*.dockerignore # unless you want it
+
+# Distribution/packaging
+dist/
+build/
+*.egg-info/
+*.eggs/
+
+# Testing/database (if local)
+*.db
+*.sqlite3
+db.sqlite3
