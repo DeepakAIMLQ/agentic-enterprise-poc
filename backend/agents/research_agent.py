@@ -1,13 +1,24 @@
+# backend/agents/research_agent.py
 from core.llm import call_llm
+from core.memory import save_memory, query_memory
+import uuid
 
 def run(brd: str):
+    context = query_memory("business requirements")
+    
     prompt = f"""
-    Based on this BRD, provide a market research summary:
-    - Target users
-    - Existing solutions / competitors
-    - Market trends
-    - Risks
+    Using the following BRD and prior context, provide a market research summary:
+    Context: {context}
+
     BRD:
     {brd}
+
+    Provide:
+    - Target users
+    - Competitors
+    - Market trends
+    - Risks
     """
-    return call_llm(prompt)
+    research = call_llm(prompt)
+    save_memory(id=str(uuid.uuid4()), text=research, metadata={"type": "MARKET_RESEARCH"})
+    return research
