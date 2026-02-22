@@ -1,0 +1,18 @@
+curl -X POST http://localhost:8000/start ^
+-H "Content-Type: application/json" ^
+-d "{\"idea\":\"AI converts customer support calls into Jira tickets\"}"
+
+
+curl -X POST http://localhost:8000/approve ^
+-H "Content-Type: application/json" ^
+-d "{\"idea\":\"AI converts customer support calls into Jira tickets\",\"approved\":false,\"feedback\":\"Too vague\"}"
+
+
+curl -X POST http://localhost:8000/approve ^
+-H "Content-Type: application/json" ^
+-d "{\"idea\":\"AI converts customer support calls into Jira tickets\",\"approved\":true}"
+
+curl -X POST http://localhost:8000/next ^
+-H "Content-Type: application/json" ^
+-d "{\"idea\":\"Platform that converts Zoom meetings into product roadmaps\"}"
+

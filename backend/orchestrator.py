@@ -7,18 +7,30 @@ from agents.planner_agent import run as planner
 from agent_registry import AGENT_MAP
 import uuid
 
+from core.tasks import Task
+from core.task_queue import add_task
+from agent_worker import agent_loop
+
 PIPELINE_DB = {}
 
-
 def start_pipeline(idea: str):
-    state = PipelineState(idea=idea)
+    add_task(Task(type="BRD", input=idea))
 
-    plan = planner(idea)
-    state.plan = plan
-    state.status = "PLANNED"
+    # run agents
+    agent_loop("BRD")
+    agent_loop("MARKET_RESEARCH")
 
-    PIPELINE_DB[idea] = state
-    return state
+    return {"status": "Pipeline executed"}
+
+# def start_pipeline(idea: str):
+#     state = PipelineState(idea=idea)
+
+#     plan = planner(idea)
+#     state.plan = plan
+#     state.status = "PLANNED"
+
+#     PIPELINE_DB[idea] = state
+#     return state
 
 
 def run_next_step(idea: str):
