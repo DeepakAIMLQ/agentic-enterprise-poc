@@ -1,26 +1,41 @@
-from agents.brd_agent import run as brd_agent
-from agents.research_agent import run as research_agent
-from core.state import PipelineState
-from core.governance import safety_check
-from core.memory import save_memory
-from agents.planner_agent import run as planner
-from agent_registry import AGENT_MAP
-import uuid
-
+import asyncio
 from core.tasks import Task
 from core.task_queue import add_task
-from agent_worker import agent_loop
+from agent_runtime import worker
 
-PIPELINE_DB = {}
-
-def start_pipeline(idea: str):
+async def start_pipeline(idea: str):
     add_task(Task(type="BRD", input=idea))
 
-    # run agents
-    agent_loop("BRD")
-    agent_loop("MARKET_RESEARCH")
+    await asyncio.gather(
+        worker("BRD"),
+        worker("MARKET_RESEARCH"),
+        worker("ARCHITECT")
+    )
+    
+#Step 5
+# from agents.brd_agent import run as brd_agent
+# from agents.research_agent import run as research_agent
+# from core.state import PipelineState
+# from core.governance import safety_check
+# from core.memory import save_memory
+# from agents.planner_agent import run as planner
+# from agent_registry import AGENT_MAP
+# import uuid
 
-    return {"status": "Pipeline executed"}
+# from core.tasks import Task
+# from core.task_queue import add_task
+# from agent_worker import agent_loop
+
+# PIPELINE_DB = {}
+
+# def start_pipeline(idea: str):
+#     add_task(Task(type="BRD", input=idea))
+
+#     # run agents
+#     agent_loop("BRD")
+#     agent_loop("MARKET_RESEARCH")
+
+#     return {"status": "Pipeline executed"}
 
 # def start_pipeline(idea: str):
 #     state = PipelineState(idea=idea)
